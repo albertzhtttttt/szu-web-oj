@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import { useUserStore } from '../store/user';  // 导入 store
+import {createRouter, createWebHistory} from 'vue-router';
+import {useUserStore} from '../store/user';  // 导入 store
 
 // 路由配置
 const routes = [
@@ -12,25 +12,31 @@ const routes = [
         path: '/home',
         name: 'homeIndex',
         component: () => import('../pages/home/index.vue'),
-        meta: { requiresAuth: false },  // 不需要认证的路由
+        meta: {requiresAuth: false},  // 不需要认证的路由
     },
     {
         path: '/course',
         name: 'courseIndex',
         component: () => import('../pages/course/index.vue'),
-        meta: { requiresAuth: false },  // 不需要认证的路由
+        meta: {requiresAuth: false},  // 不需要认证的路由
+    },
+    {
+        path: '/course/detail',
+        name: 'courseDetailIndex',
+        component: () => import('../pages/course/detail.vue'),
+        meta: {requiresAuth: false},  // 不需要认证的路由
     },
     {
         path: '/college',
         name: 'collegeIndex',
         component: () => import('../pages/college/index.vue'),
-        meta: { requiresAuth: false },  // 不需要认证的路由
+        meta: {requiresAuth: false},  // 不需要认证的路由
     },
     {
         path: '/about',
         name: 'aboutIndex',
         component: () => import('../pages/about/index.vue'),
-        meta: { requiresAuth: false },  // 不需要认证的路由
+        meta: {requiresAuth: false},  // 不需要认证的路由
     },
 ];
 
