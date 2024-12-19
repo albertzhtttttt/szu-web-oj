@@ -30,6 +30,13 @@
       >
         关于我们
       </el-button>
+      <el-button
+          :type="currentRoute.path === '/exercise' ? 'primary' : 'info'"
+          link
+          @click="go('/exercise')"
+      >
+        练习场
+      </el-button>
     </el-space>
     <el-space>
       <el-input v-model="searchInfo" style="width: 240px" placeholder="请输入课程/学校/主讲老师"/>

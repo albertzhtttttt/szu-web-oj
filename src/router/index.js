@@ -38,6 +38,12 @@ const routes = [
         component: () => import('../pages/about/index.vue'),
         meta: {requiresAuth: false},  // 不需要认证的路由
     },
+    {
+        path: '/exercise',
+        name: 'exerciseIndex',
+        component: () => import('../pages/exercise/index.vue'),
+        meta: {requiresAuth: false},  // 不需要认证的路由
+    },
 ];
 
 const router = createRouter({
