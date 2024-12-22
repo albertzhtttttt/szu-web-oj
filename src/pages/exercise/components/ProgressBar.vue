@@ -14,13 +14,23 @@
       ></div>
     </div>
     <!-- 进度条 -->
-    <div class="progress-bar">
+    <div v-if="userStore.isAuthenticated" class="progress-bar">
       <div class="progress" :style="{ width: progressWidth + '%' }"></div>
     </div>
+
+    <!-- 提交按钮 登录后 未提交 已提交但是可以重复提交情况下显示-->
+    <button v-if="userStore.isAuthenticated && (currentQuestionSet.score===null || currentQuestionSet.allowRetake === 'yes')" @click="submit" class="submit-button">提交</button>
+
+    <!-- 布置作业按钮 教师用户才显示-->
+    <button v-if="userStore.isAuthenticated && userStore.currentUser.role==='teacher'" @click="arrangeHomework" class="submit-button">布置作业</button>
+
   </div>
 </template>
 
 <script>
+import { useExerciseStore } from '/src/store/exercise.js';
+import {ElMessage} from "element-plus";
+import {useUserStore} from "@/store/user.js";
 
 export default {
   name: 'ProgressBar',
@@ -40,11 +50,42 @@ export default {
     answeredQuestionIds:{
       type: Array,
       required: true
+    },
+    questionSets: {
+      type: Array,
+      required: true
+    },
+  },
+  data(){
+    return{
+      userStore: useUserStore(),  //pinia：用户登录数据
+      exerciseStore: useExerciseStore(),  //pinia：题目集数据
     }
   },
   computed: {
     progressWidth() {
+      if (this.total === 0 ){
+        return 0;
+      }
       return (this.current / this.total) * 100;
+    }
+  },
+  methods: {
+    submit() {// 处理提交逻辑
+      console.log(this.answeredQuestionIds);
+      console.log(this.total);
+      // 检查是否所有问题都已经回答，将结果发送到服务器等。
+      if (this.answeredQuestionIds.length === this.total) {
+        this.exerciseStore.updateQuestions(this.questionSets, this.currentQuestionSet.name);
+        ElMessage.success('提交成功！');
+      }
+      else {
+        ElMessage.error('还有未回答的问题，请完成所有问题后再提交！')
+      }
+    },
+    arrangeHomework(){ //分发作业给学生
+      this.exerciseStore.arrangeQuestions(this.currentQuestionSet);
+      ElMessage.success('布置作业成功！');
     }
   },
   mounted() {
@@ -81,7 +122,8 @@ export default {
 .question-ids-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
+  width: calc(5 * 18px + 4 * 20px); /* 5个小方块的宽度加上4个间隔 */
   margin-bottom: 10px;
 }
 
@@ -102,4 +144,23 @@ export default {
 .question-id-box.not-answered {
   background-color: #ddd; /* 默认灰色 */
 }
+
+/* 提交按钮样式 */
+.submit-button {
+  margin-top: 20px;
+  padding: 8px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+
+
 </style>

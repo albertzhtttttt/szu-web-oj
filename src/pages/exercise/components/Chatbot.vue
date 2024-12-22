@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      isChatVisible: true,
+      isChatVisible: false,
       messages: [
         { sender: 'bot', text: '你好！有什么问题我可以帮助你解决吗？' }
       ],
@@ -41,10 +41,11 @@ export default {
     sendMessage() {
       if (this.userInput.trim()) {
         this.messages.push({ sender: 'user', text: this.userInput });
+        const userInputCopy = this.userInput; // 直接复制字符串值
+        this.userInput = '';
         // 模拟 Chatbot 响应
         setTimeout(() => {
-          this.messages.push({ sender: 'bot', text: '这是我的回答：' + this.userInput });
-          this.userInput = '';
+          this.messages.push({ sender: 'bot', text: '这是我的回答：' + userInputCopy });
         }, 1000);
       }
     },
@@ -66,7 +67,7 @@ export default {
   width: 300px;
   position: absolute;
   bottom: 20px;
-  right: 20px;
+  left: 20px;
   padding: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transform: translateY(20px);
@@ -191,7 +192,7 @@ export default {
 .circle-button {
   position: fixed;
   bottom: 100px;
-  right: 0;
+  left: -15px;
   width: 30px;
   height: 30px;
   background-color: #444;
@@ -207,7 +208,7 @@ export default {
 }
 
 .circle-button:hover {
-  transform: translateX(-10px);
+  transform: translateX(15px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 </style>

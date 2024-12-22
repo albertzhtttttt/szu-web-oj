@@ -15,9 +15,12 @@
       <h3>{{ set.name }}</h3> <!-- 显示题目集的名称 -->
     </div>
   </div>
+
 </template>
 
 <script>
+import {useUserStore} from '/src/store/user.js'
+import { useExerciseStore } from '/src/store/exercise.js';
 export default {
   name: 'QuestionList',
   props: {
@@ -32,7 +35,9 @@ export default {
   },
   data() {
     return {
-      selectedSetIndex: 0 // 当前选中的题目集的索引
+      selectedSetIndex: 0, // 当前选中的题目集的索引
+      userStore: useUserStore(),  //pinia：用户登录数据
+      exerciseStore: useExerciseStore(),  //pinia：题目集数据
     }
   },
   methods: {
@@ -40,7 +45,7 @@ export default {
     selectQuestionSet(setIndex) {
       this.$emit('selectQuestionSet', setIndex)
       this.selectedSetIndex = setIndex
-    }
+    },
   }
 }
 </script>
@@ -81,4 +86,6 @@ hover放在最后面，防止被任何状态覆盖
   background-color: #4caf50;
   color: white;
 }
+
+
 </style>

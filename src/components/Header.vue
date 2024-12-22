@@ -35,7 +35,7 @@
           link
           @click="go('/exercise')"
       >
-        练习场
+        题库
       </el-button>
     </el-space>
     <el-space>
