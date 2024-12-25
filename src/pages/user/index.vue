@@ -1,11 +1,20 @@
 <script setup>
-
+import AccountPage from "@/pages/user/component/common/AccountPage.vue";
 </script>
 
 <template>
-  <div>这是账户模块</div>
+  <div class="wrap">
+      <AccountPage/>
+  </div>
 </template>
 
 <style scoped>
-
+.wrap {
+  display: flex;
+  padding: 0 300px;
+  width: 100%;
+  min-height: 64.5vh;
+  flex-direction: column;
+  background-color: #f9f9f9;
+}
 </style>

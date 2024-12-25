@@ -18,7 +18,7 @@ const routes = [
         path: '/course',
         name: 'courseIndex',
         component: () => import('../pages/course/index.vue'),
-        meta: {requiresAuth: false},  // 不需要认证的路由
+        meta: {requiresAuth: true},  // 不需要认证的路由
     },
     {
         path: '/course/detail',
@@ -38,6 +38,12 @@ const routes = [
         component: () => import('../pages/about/index.vue'),
         meta: {requiresAuth: false},  // 不需要认证的路由
     },
+    {
+        path: '/user',
+        name: 'userIndex',
+        component: () => import('../pages/user/index.vue'),
+        meta: {requiresAuth: true},  // 不需要认证的路由
+    },
 ];
 
 const router = createRouter({
@@ -46,10 +52,12 @@ const router = createRouter({
 });
 
 // 路由守卫：检查是否需要权限认证
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     const userStore = useUserStore();  // 使用 store 获取用户认证信息
+    await userStore.checkToken();
     const isAuthenticated = userStore.isAuthenticated;  // 假设你有一个 isAuthenticated 标志来判断是否已登录
-    const userRole = userStore.userRole;  // 假设用户角色存储在 userRole 中
+    const userRole = userStore.currentUser == null ? null : userStore.currentUser.role;  // 假设用户角色存储在 userRole 中
+    console.log(userRole);
 
     // 如果目标路由需要认证
     if (to.meta.requiresAuth) {
