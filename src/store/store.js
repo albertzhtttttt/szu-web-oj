@@ -37,6 +37,7 @@ export const useCourseStore = defineStore('course', {
                     teacher: '湖北大学 / 王志茹',
                     status: '开课中',
                     info:'这是课程简介',
+                    keyWord: '教育·语言',
                 },
                 {
                     image: 'src/assets/rec7.png',
@@ -44,6 +45,7 @@ export const useCourseStore = defineStore('course', {
                     teacher: '大连大学 / 刘金涛',
                     status: '已结束',
                     info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '理学·工学',
                 },
                 {
                     image: 'src/assets/rec8.png',
@@ -51,6 +53,7 @@ export const useCourseStore = defineStore('course', {
                     teacher: '大连大学 / 刘金涛',
                     status: '已结束',
                     info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '理学·工学',
                 },
                 {
                     image: 'src/assets/rec9.png',
@@ -58,6 +61,7 @@ export const useCourseStore = defineStore('course', {
                     teacher: '南昌大学 / 吴小吟',
                     status: '已结束',
                     info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '',
                 },
                 {
                     image: 'src/assets/rec10.png',
@@ -65,6 +69,7 @@ export const useCourseStore = defineStore('course', {
                     teacher: '昆明理工大学 / 洪云',
                     status: '已结束',
                     info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '',
                 },
                 {
                     image: 'src/assets/rec11.png',
@@ -72,6 +77,7 @@ export const useCourseStore = defineStore('course', {
                     teacher: '南昌大学 / 孙水林',
                     status: '已结束',
                     info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '理学·工学',
                 },
                 {
                     image: 'src/assets/rec12.png',
@@ -79,6 +85,7 @@ export const useCourseStore = defineStore('course', {
                     teacher: '广州大学 / 张雪娇',
                     status: '已结束',
                     info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '教育·语言',
                 },
                 {
                     image: 'src/assets/rec13.png',
@@ -86,7 +93,64 @@ export const useCourseStore = defineStore('course', {
                     teacher: '广州大学 / 胡宣安',
                     status: '已结束',
                     info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
-                }
+                    keyWord: '教育·语言',
+                },
+                {
+                    image: 'src/assets/rec14.png',
+                    name: '大学计算机',
+                    teacher: '深圳大学 / 李延红',
+                    status: '已结束',
+                    info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '计算机',
+                },
+                {
+                    image: 'src/assets/rec15.jpg',
+                    name: '办公软件',
+                    teacher: '西南石油大学 / 王杨',
+                    status: '已结束',
+                    info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '计算机',
+                },
+                {
+                    image: 'src/assets/rec16.png',
+                    name: 'c君带你玩编程',
+                    teacher: '昆明理工大学 / 方娇莉',
+                    status: '已结束',
+                    info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '计算机',
+                },
+                {
+                    image: 'src/assets/rec17.png',
+                    name: '嵌入式系统及应用',
+                    teacher: '苏州大学 / 王宜怀',
+                    status: '已结束',
+                    info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '计算机',
+                },
+                {
+                    image: 'src/assets/rec2.png',
+                    name: '云计算基础及应用',
+                    teacher: '深圳大学 / 明仲',
+                    status: '已结束',
+                    info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '计算机',
+                },
+                {
+                    image: 'src/assets/rec18.png',
+                    name: '云计算技术',
+                    teacher: '南昌大学 / 王炜立',
+                    status: '已结束',
+                    info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '计算机',
+                },
+                {
+                    image: 'src/assets/rec19.png',
+                    name: '管理信息系统',
+                    teacher: '武汉科技大学 / 张志清',
+                    status: '已结束',
+                    info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '计算机',
+                },
             ]
         },
 
