@@ -1,15 +1,122 @@
+<template>
+  <div class="wrap">
+    <div>
+      <el-button @click="addNewCourse">添加课程</el-button>
+      <el-text>课程分类：</el-text>
+      <el-space>
+        <el-button
+            :type="currentCategory === 'all' ? 'primary' : 'info'"
+            link
+            @click="setCategory('all')"
+        >
+          全部
+        </el-button>
+        <el-button
+            :type="currentCategory === 'lixue' ? 'primary' : 'info'"
+            link
+            @click="setCategory('lixue')"
+        >
+          理学·工学
+        </el-button>
+        <el-button
+            :type="currentCategory === 'jisuan' ? 'primary' : 'info'"
+            link
+            @click="setCategory('jisuan')"
+        >
+          计算机
+        </el-button>
+        <el-button
+            :type="currentCategory === 'wenxue' ? 'primary' : 'info'"
+            link
+            @click="setCategory('wenxue')"
+        >
+          文学·艺术
+        </el-button>
+      </el-space>
+    </div>
+    <div>
+      <el-text>供课院校：</el-text>
+      <el-space>
+        <el-button
+            :type="currentCollege === 'all' ? 'primary' : 'info'"
+            link
+            @click="setCollege('all')"
+        >
+          全部
+        </el-button>
+        <el-button
+            :type="currentCollege === 'szu' ? 'primary' : 'info'"
+            link
+            @click="setCollege('szu')"
+        >
+          深圳大学
+        </el-button>
+        <el-button
+            :type="currentCollege === 'hubei' ? 'primary' : 'info'"
+            link
+            @click="setCollege('hubei')"
+        >
+          湖北大学
+        </el-button>
+
+      </el-space>
+    </div>
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="综合排序" name="com"></el-tab-pane>
+      <el-tab-pane label="最新" name="new">Config</el-tab-pane>
+      <el-tab-pane label="最热" name="hot">Role</el-tab-pane>
+    </el-tabs>
+    <course-item v-for="(course, index) in courses" :key="index" :course="course"></course-item>
+  </div>
+</template>
+
 <script setup>
+import {onMounted, ref, computed} from 'vue'
+import {useCourseStore} from '/src/store/store.js'
+import CourseItem from "@/pages/home/components/CourseItem.vue"
+
+const activeName = ref('com')
+const currentCategory = ref('all')
+const currentCollege = ref('all')
+const courseStore = useCourseStore()
+
+const handleClick = (tab, event) => {
+  console.log(tab, event)
+}
+
+const setCategory = (category) => {
+  currentCategory.value = category
+}
+const setCollege = (college) => {
+  currentCollege.value = college
+}
+
+onMounted(() => {
+    courseStore.loadCourses()
+})
+
+const courses = computed(() => courseStore.courses)
+
+// 添加新课程的函数
+const addNewCourse = () => {
+  const newCourse = {
+    image: 'src/assets/rec14.png',
+    name: '新课程名称',
+    teacher: '新课程老师',
+    status: '开课中',
+    info: '新课程简介'
+  }
+  courseStore.addCourse(newCourse)  // 调用 store 中的 addCourse 方法
+}
 
 </script>
 
-<template>
-  <div>这是课程</div>
-  <div>这是课程</div>
-  <div>这是课程</div>
-  <div>这是课程</div>
-  <div>这是课程</div>
-</template>
-
 <style scoped>
-
+.wrap {
+  display: flex;
+  padding: 0 300px;
+  width: 100%;
+  min-height: 100vh;
+  flex-direction: column;
+}
 </style>
