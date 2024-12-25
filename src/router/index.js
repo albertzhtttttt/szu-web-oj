@@ -23,7 +23,7 @@ const routes = [
     {
         path: '/course/detail',
         name: 'courseDetailIndex',
-        component: () => import('../pages/course/detail.vue'),
+        component: () => import('../pages/courseDetail/index.vue'),
         meta: {requiresAuth: false},  // 不需要认证的路由
     },
     {

@@ -63,10 +63,10 @@
     </div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="综合排序" name="com"></el-tab-pane>
-      <el-tab-pane label="最新" name="new">Config</el-tab-pane>
-      <el-tab-pane label="最热" name="hot">Role</el-tab-pane>
+      <el-tab-pane label="名称升序" name="asc"></el-tab-pane>
+      <el-tab-pane label="名称降序" name="desc"></el-tab-pane>
     </el-tabs>
-    <course-item v-for="(course, index) in courses" :key="index" :course="course"></course-item>
+    <course-item v-for="(course, index) in sortedCourses" :key="index" :course="course"></course-item>
   </div>
 </template>
 
@@ -80,8 +80,23 @@ const currentCategory = ref('all')
 const currentCollege = ref('all')
 const courseStore = useCourseStore()
 
-const handleClick = (tab, event) => {
-  console.log(tab, event)
+const sortedCourses = computed(() => {
+  // 返回排序后的副本
+  let coursesCopy = [...courseStore.courses]
+
+  // 根据当前排序条件处理
+  if (activeName.value === 'asc') {
+    return coursesCopy.sort((a, b) => a.name.localeCompare(b.name))
+  } else if (activeName.value === 'desc') {
+    return coursesCopy.sort((a, b) => b.name.localeCompare(a.name))
+  } else {
+    return coursesCopy
+  }
+})
+
+const handleClick = async (tab, event) => {
+  // 更新当前选中的排序标签
+  activeName.value = tab.name
 }
 
 const setCategory = (category) => {
@@ -104,7 +119,8 @@ const addNewCourse = () => {
     name: '新课程名称',
     teacher: '新课程老师',
     status: '开课中',
-    info: '新课程简介'
+    info: '新课程简介',
+    keyWord: '理学·工学'
   }
   courseStore.addCourse(newCourse)  // 调用 store 中的 addCourse 方法
 }

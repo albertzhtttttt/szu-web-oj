@@ -37,6 +37,7 @@ export const useCourseStore = defineStore('course', {
                     teacher: '湖北大学 / 王志茹',
                     status: '开课中',
                     info:'这是课程简介',
+                    keyWord: '教育·语言',
                 },
                 {
                     image: 'src/assets/rec7.png',
@@ -44,6 +45,7 @@ export const useCourseStore = defineStore('course', {
                     teacher: '大连大学 / 刘金涛',
                     status: '已结束',
                     info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '理学·工学',
                 },
                 {
                     image: 'src/assets/rec8.png',
@@ -51,6 +53,7 @@ export const useCourseStore = defineStore('course', {
                     teacher: '大连大学 / 刘金涛',
                     status: '已结束',
                     info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '理学·工学',
                 },
                 {
                     image: 'src/assets/rec9.png',
@@ -58,6 +61,7 @@ export const useCourseStore = defineStore('course', {
                     teacher: '南昌大学 / 吴小吟',
                     status: '已结束',
                     info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '',
                 },
                 {
                     image: 'src/assets/rec10.png',
@@ -65,6 +69,7 @@ export const useCourseStore = defineStore('course', {
                     teacher: '昆明理工大学 / 洪云',
                     status: '已结束',
                     info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '',
                 },
                 {
                     image: 'src/assets/rec11.png',
@@ -72,6 +77,7 @@ export const useCourseStore = defineStore('course', {
                     teacher: '南昌大学 / 孙水林',
                     status: '已结束',
                     info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '理学·工学',
                 },
                 {
                     image: 'src/assets/rec12.png',
@@ -79,6 +85,7 @@ export const useCourseStore = defineStore('course', {
                     teacher: '广州大学 / 张雪娇',
                     status: '已结束',
                     info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '教育·语言',
                 },
                 {
                     image: 'src/assets/rec13.png',
@@ -86,7 +93,64 @@ export const useCourseStore = defineStore('course', {
                     teacher: '广州大学 / 胡宣安',
                     status: '已结束',
                     info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
-                }
+                    keyWord: '教育·语言',
+                },
+                {
+                    image: 'src/assets/rec14.png',
+                    name: '大学计算机',
+                    teacher: '深圳大学 / 李延红',
+                    status: '已结束',
+                    info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '计算机',
+                },
+                {
+                    image: 'src/assets/rec15.png',
+                    name: '办公软件',
+                    teacher: '广州大学 / 胡宣安',
+                    status: '已结束',
+                    info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '教育·语言',
+                },
+                {
+                    image: 'src/assets/rec13.png',
+                    name: '生死学',
+                    teacher: '广州大学 / 胡宣安',
+                    status: '已结束',
+                    info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '教育·语言',
+                },
+                {
+                    image: 'src/assets/rec13.png',
+                    name: '生死学',
+                    teacher: '广州大学 / 胡宣安',
+                    status: '已结束',
+                    info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '教育·语言',
+                },
+                {
+                    image: 'src/assets/rec13.png',
+                    name: '生死学',
+                    teacher: '广州大学 / 胡宣安',
+                    status: '已结束',
+                    info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '教育·语言',
+                },
+                {
+                    image: 'src/assets/rec13.png',
+                    name: '生死学',
+                    teacher: '广州大学 / 胡宣安',
+                    status: '已结束',
+                    info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '教育·语言',
+                },
+                {
+                    image: 'src/assets/rec13.png',
+                    name: '生死学',
+                    teacher: '广州大学 / 胡宣安',
+                    status: '已结束',
+                    info:'这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介这是课程简介',
+                    keyWord: '教育·语言',
+                },
             ]
         },
 
