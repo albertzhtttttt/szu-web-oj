@@ -133,3 +133,66 @@ app.delete('/api/courses/:name', (req, res) => {
   saveCourses(courses); // 保存更新后的课程列表
   res.status(200).send({ message: '课程删除成功' });
 });
+
+// 添加单元
+app.post('/api/courses/:courseName/units', (req, res) => {
+  const { courseName } = req.params;
+  const { name } = req.body;
+  const courses = getCourses();
+  const course = courses.find(course => course.name === courseName);
+  if (!course) {
+    return res.status(404).send('课程未找到');
+  }
+  course.units.push({ name, questions: [] });
+  saveCourses(courses);
+  res.status(201).send('单元添加成功');
+});
+
+// 删除单元
+app.delete('/api/courses/:courseName/units/:unitName', (req, res) => {
+  const { courseName, unitName } = req.params;
+  let courses = getCourses();
+  const course = courses.find(course => course.name === courseName);
+  if (!course) {
+    return res.status(404).send('课程未找到');
+  }
+  course.units = course.units.filter(unit => unit.name !== unitName);
+  saveCourses(courses);
+  res.status(200).send('单元删除成功');
+});
+
+// 添加问题
+app.post('/api/courses/:courseName/units/:unitName/questions', (req, res) => {
+  const { courseName, unitName } = req.params;
+  const { question } = req.body;
+  const courses = getCourses();
+  const course = courses.find(course => course.name === courseName);
+  if (!course) {
+    return res.status(404).send('课程未找到');
+  }
+  const unit = course.units.find(unit => unit.name === unitName);
+  if (!unit) {
+    return res.status(404).send('单元未找到');
+  }
+  const questionId = unit.questions.length + 1;
+  unit.questions.push({ id: questionId, question });
+  saveCourses(courses);
+  res.status(201).send('问题添加成功');
+});
+
+// 删除问题
+app.delete('/api/courses/:courseName/units/:unitName/questions/:questionId', (req, res) => {
+  const { courseName, unitName, questionId } = req.params;
+  let courses = getCourses();
+  const course = courses.find(course => course.name === courseName);
+  if (!course) {
+    return res.status(404).send('课程未找到');
+  }
+  const unit = course.units.find(unit => unit.name === unitName);
+  if (!unit) {
+    return res.status(404).send('单元未找到');
+  }
+  unit.questions = unit.questions.filter(question => question.id !== parseInt(questionId));
+  saveCourses(courses);
+  res.status(200).send('问题删除成功');
+});
