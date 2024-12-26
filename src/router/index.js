@@ -50,6 +50,12 @@ const routes = [
         name: 'studentIndex',
         component: () => import('../pages/student/index.vue'),
         meta: {requiresAuth: false},  // 不需要认证的路由
+      },
+    {
+        path: '/exercise',
+        name: 'exerciseIndex',
+        component: () => import('../pages/exercise/index.vue'),
+        meta: {requiresAuth: false},  // 不需要认证的路由
     },
 ];
 
