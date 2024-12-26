@@ -64,7 +64,7 @@
       </el-tab-pane>
 
       <!-- 学生 tab -->
-      <el-tab-pane v-if="userStore.isStudent" label="学生" name="student">
+      <el-tab-pane v-if="userStore.isStudent" label="学习中心" name="student">
       </el-tab-pane>
 
       <!-- 管理员或教师 tab -->

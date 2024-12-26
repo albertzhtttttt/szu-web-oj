@@ -1,6 +1,6 @@
 <template>
   <div class="my-todos">
-    <h3>待办事项</h3>
+    <h3>我的作业</h3>
 
     <!-- 已完成事项 -->
     <div class="completed-tasks">
@@ -89,6 +89,11 @@ const viewAssignment = (task) => {
 
 
 <style scoped>
+h3 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+}
 .my-todos {
   padding: 20px;
   background-color: #fff;
