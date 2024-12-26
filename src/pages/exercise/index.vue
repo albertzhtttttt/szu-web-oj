@@ -90,7 +90,7 @@ import QuestionList from './components/QuestionList.vue'
 import Chatbot from './components/Chatbot.vue'
 import {ElMessage} from "element-plus";
 import {useUserStore} from '/src/store/user.js'
-import { useExerciseStore } from '/src/store/exercise.js';
+import {useExerciseStore } from '/src/store/exercise.js';
 
 export default {
   name: 'exercise',
