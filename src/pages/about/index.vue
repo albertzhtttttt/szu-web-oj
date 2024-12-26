@@ -30,20 +30,22 @@ export default {
 
 <style scoped>
 .about-page {
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', Arial, sans-serif;
   margin: 0 auto;
   max-width: 1200px;
   padding: 20px;
+  color: #333; /* 设置字体颜色为黑色或者深灰色 */
 }
 
 .page-header {
   text-align: center;
-  color: #007BFF;
+  color: #007BFF; /* 设置标题颜色 */
 }
 
 .page-content {
   margin-top: 20px;
   line-height: 1.6;
+  color: #333; /* 确保内容部分的字体颜色为深灰色 */
 }
 
 .stats {
