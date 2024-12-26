@@ -55,7 +55,7 @@ const routes = [
         path: '/exercise',
         name: 'exerciseIndex',
         component: () => import('../pages/exercise/index.vue'),
-        meta: {requiresAuth: false},  // 不需要认证的路由
+        meta: {requiresAuth: true},  // 不需要认证的路由
     },
 ];
 
@@ -75,6 +75,10 @@ router.beforeEach(async (to, from, next) => {
     // 如果目标路径在 routes 中且不需要认证，直接放行
     const routePaths = routes.map(route => route.path);
     if (routePaths.includes(to.path) && !to.meta.requiresAuth) {
+        return next();  // 直接放行
+    }
+    // 如果目标路径在 routes 中且需要认证，用户认证后跳转
+    if (routePaths.includes(to.path) && to.meta.requiresAuth && isAuthenticated) {
         return next();  // 直接放行
     }
 

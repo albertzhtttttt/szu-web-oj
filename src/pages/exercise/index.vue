@@ -89,8 +89,9 @@ import QuestionDisplay from './components/QuestionDisplay.vue'
 import QuestionList from './components/QuestionList.vue'
 import Chatbot from './components/Chatbot.vue'
 import {ElMessage} from "element-plus";
-import {useUserStore} from '/src/store/user.js'
-import {useExerciseStore } from '/src/store/exercise.js';
+import {useUserStore} from "@/store/user.js";
+import {useExerciseStore } from '@/store/exercise.js';
+
 
 export default {
   name: 'exercise',
@@ -124,7 +125,7 @@ export default {
   },
   computed: {
     currentQuestionSet() {
-      // questionSets数组为空，则传一个空的questionset
+      // questionSets数组为空，则传一个空的questionSet
       if (this.questionSets.length === 0) {
         return { name: null, questions: [] };
       }

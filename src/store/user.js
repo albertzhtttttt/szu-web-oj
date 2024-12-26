@@ -32,7 +32,10 @@ export const useUserStore = defineStore('user', {
             await registerApi(encryptedRegisterForm);
             // 注册成功自动登录
             this.isAuthenticated = true;
-            await getLogin(encryptedRegisterForm);
+            const result = await getLogin(encryptedRegisterForm);
+            await setToken(result.token)
+            this.isAuthenticated = true
+            this.currentUser = (await getUserInfo()).account
         },
 
         // 检验登录状态是否过期
