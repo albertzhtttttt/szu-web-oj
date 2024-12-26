@@ -5,7 +5,7 @@ import "nprogress/nprogress.css";
 import {getToken} from './token-utils.ts';
 // 配置新建一个 axios 实例
 const service = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: "http://8.134.98.31:8080",
     timeout: 50000,
 });
 

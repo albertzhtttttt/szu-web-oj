@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <el-tabs v-model="activeTab" type="card">
+    <el-tabs v-model="activeTab" type="card" @tab-change="handleTabClick">
       <el-tab-pane label="个人信息" name="info">
         <el-form :model="account" label-width="100px">
           <el-form-item label="昵称">
@@ -63,12 +63,13 @@
         <discussions :topics="account.discussions"/>
       </el-tab-pane>
 
-      <el-tab-pane v-if="userStore.isTeacher" label="管理" name="management">
-        <management :topics="account.management"/>
+      <!-- 学生 tab -->
+      <el-tab-pane v-if="userStore.isStudent" label="学习中心" name="student">
       </el-tab-pane>
 
-      <el-tab-pane v-if="userStore.isAdmin" label="管理" name="discussions">
-        <management :topics="account.discussions"/>
+      <!-- 管理员或教师 tab -->
+      <el-tab-pane v-if="userStore.isTeacher || userStore.isAdmin" label="管理" name="management">
+        <management :topics="account.management"/>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -87,6 +88,7 @@ import WrongQuestions from './WrongQuestions.vue';
 import Discussions from './Discussions.vue';
 import Management from './Management.vue'
 import {onMounted} from "vue";
+import router from "@/router/index.js";
 
 const accountStore = useAccountStore();
 const userStore = useUserStore();
@@ -117,6 +119,13 @@ const beforeAvatarUpload = (file) => {
   }
   return isImage;  // 返回 true 继续上传，false 阻止上传
 };
+// 学生标签点击跳转
+const handleTabClick = (tab) => {
+  if (tab === "student" && userStore.isStudent) {
+    router.push('/student'); // 跳转到学生页面
+  }
+};
+
 </script>
 
 <style scoped>

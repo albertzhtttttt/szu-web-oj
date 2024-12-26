@@ -90,7 +90,7 @@ import QuestionList from './components/QuestionList.vue'
 import Chatbot from './components/Chatbot.vue'
 import {ElMessage} from "element-plus";
 import {useUserStore} from '/src/store/user.js'
-import { useExerciseStore } from '/src/store/exercise.js';
+import {useExerciseStore } from '/src/store/exercise.js';
 
 export default {
   name: 'exercise',
@@ -160,6 +160,13 @@ export default {
       }
       return array;
     },
+    async loadQuestionBank() {//从数据库获取当前用户所有题目集
+      try {
+        await this.exerciseStore.initQuestionBank();
+      } catch (error) {
+        console.error("Failed to load init bank", error);
+      }
+    },
     async loadQuestionSets() {//从数据库获取当前用户所有题目集
       try {
         const questionSets = await this.exerciseStore.loadData();
@@ -190,6 +197,7 @@ export default {
         // //这样写得到一个promise，长度非0，但实际长度为0导致progressbar报错
         // this.questionSets = this.exerciseStore.loadData();
         // console.log("get questionset from db",this.questionSets);
+        this.loadQuestionBank();
         this.loadQuestionSets();
       }
       else {
@@ -204,6 +212,9 @@ export default {
     // 页面加载时检查认证状态
     if (!this.userStore.isAuthenticated) {
       ElMessage.error('登录后才能使用题库，请先登录！');  // 如果未认证，弹出错误提示
+    }
+    else{
+      this.loadQuestionBank();
     }
   },
 }

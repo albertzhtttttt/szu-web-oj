@@ -1,8 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router';
 import {useUserStore} from '../store/user';  // 导入 store
-import Index from '@/pages/student/index.vue';
-import MyCourses from '@/pages/student/myCourses.vue';
-import TodoList from '@/pages/student/todoList.vue';
+
 
 // 路由配置
 const routes = [
@@ -21,7 +19,7 @@ const routes = [
         path: '/course',
         name: 'courseIndex',
         component: () => import('../pages/course/index.vue'),
-        meta: {requiresAuth: true},  // 不需要认证的路由
+        meta: {requiresAuth: false},  // 不需要认证的路由 
     },
     {
         path: '/course/detail',
@@ -49,19 +47,8 @@ const routes = [
     },
     {
         path: '/student',
-        component: Index,
-        children: [
-          {
-            path: 'my-courses',
-            name: 'MyCourses',
-            component: MyCourses,
-          },
-          {
-            path: 'todo-list',
-            name: 'TodoList',
-            component: TodoList,
-          },
-        ],
+        name: 'studentIndex',
+        component: () => import('../pages/student/index.vue'),
         meta: {requiresAuth: false},  // 不需要认证的路由
       },
     {

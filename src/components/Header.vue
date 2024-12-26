@@ -1,5 +1,4 @@
 <template>
-  {{ userStore }}
   <div class="wrap">
     <el-space :size="20">
       <el-image style="width: 125px; height: 50px; margin-right: 20px; " src="src/assets/logo.png"></el-image>
