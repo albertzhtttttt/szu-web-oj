@@ -42,10 +42,20 @@
       <el-input v-model="searchInfo" style="width: 240px" placeholder="请输入课程/学校/主讲老师"/>
       <div v-if="userStore.isAuthenticated">
         <!-- 显示头像 -->
-        <el-avatar style="margin-right: 20px;" @click="go('/user')">{{
-            userStore.currentUser?.username
-          }}
+        <el-avatar
+            v-if="accountStore.accountData.avatar"
+            :src="accountStore.accountData.avatar"
+            style="margin-right: 20px;"
+            @click="go('/user')"
+        />
+        <el-avatar
+            v-else
+            style="margin-right: 20px;"
+            @click="go('/user')"
+        >
+          {{ accountStore.accountData.username }}
         </el-avatar>
+
         <el-button type="primary" plain @click="logout">登出</el-button>
       </div>
 
@@ -120,12 +130,15 @@
 import {useRoute, useRouter} from 'vue-router'
 import {reactive, ref} from "vue"
 import {useUserStore} from '/src/store/user.js'
+import {useAccountStore} from "@/store/account.js";
 import {ElMessage} from "element-plus";
 import {registerValidateApi} from '@/pages/user/utils/api.js'
+import {getStatus, setStatus, findUidByUsername} from "@/pages/user/utils/api.js";
 
 const router = useRouter()
 const currentRoute = useRoute()
 const userStore = useUserStore()
+const accountStore = useAccountStore();
 const visible = ref(false)
 const registerVisible = ref(false)
 const searchInfo = ref('')
@@ -141,8 +154,10 @@ const registerForm = reactive({
 })
 const userFormRef = ref(null)
 const registerFormRef = ref(null)
+let errorCount = 0
 // 路由跳转
 const go = (path) => router.push(path)
+
 const login = () => {
   visible.value = true
 }
@@ -153,17 +168,37 @@ const onConfirm = () => {
   if (userFormRef.value) {
     userFormRef.value.validate(async (valid) => {
       if (valid) {
-        // 设置为await等待isAuthenticated置真
-        await userStore.login(userForm)
-        if (userStore.isAuthenticated) {
-          ElMessage.success('登录成功！')
-          visible.value = false;
+        const uid = await findUidByUsername(userForm.username); // 获取用户 UID
+        console.log(uid)
+        const status = await getStatus(uid); // 获取账户状态
+
+        if (status === 1) {  // 1 表示账户被冻结
+          ElMessage.error('账户已被冻结，无法登录！');
+          return;
         }
-        // 错误判断已在响应拦截器处理：utils/request.js
+
+        try {
+          await userStore.login(userForm); // 尝试登录
+          ElMessage.success('登录成功！');
+          visible.value = false;
+          errorCount = 0
+          await accountStore.downloadAccountProfile(userStore.currentUser.uid)
+        } catch (e) {
+          errorCount++; // 假设loginResult返回错误次数
+          const remainingAttempts = 5 - errorCount;  // 剩余尝试次数
+
+          if (remainingAttempts > 0) {
+            ElMessage.error(`密码错误！剩余${remainingAttempts}次机会`);
+          } else {
+            await setStatus(uid, 1); // 错误次数超过5次，冻结账户
+            ElMessage.error('错误次数过多，账户已被冻结！');
+          }
+        }
       }
     });
   }
-}
+};
+
 const onRegisterConfirm = () => {
   if (registerFormRef.value) {
     registerFormRef.value.validate(async (valid) => {
@@ -173,6 +208,7 @@ const onRegisterConfirm = () => {
         if (userStore.isAuthenticated) {
           ElMessage.success('注册成功！')
           registerVisible.value = false;
+          await accountStore.downloadAccountProfile(userStore.currentUser.uid)
         }
         // 错误判断已在响应拦截器处理：utils/request.js
       }

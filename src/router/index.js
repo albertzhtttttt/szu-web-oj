@@ -19,7 +19,7 @@ const routes = [
         path: '/course',
         name: 'courseIndex',
         component: () => import('../pages/course/index.vue'),
-        meta: {requiresAuth: false},  // 不需要认证的路由 
+        meta: {requiresAuth: true},  // 不需要认证的路由
     },
     {
         path: '/course/detail',
@@ -55,7 +55,7 @@ const routes = [
         path: '/exercise',
         name: 'exerciseIndex',
         component: () => import('../pages/exercise/index.vue'),
-        meta: {requiresAuth: false},  // 不需要认证的路由
+        meta: {requiresAuth: true},  // 不需要认证的路由
     },
 ];
 
@@ -72,18 +72,24 @@ router.beforeEach(async (to, from, next) => {
     const userRole = userStore.currentUser == null ? null : userStore.currentUser.role;  // 假设用户角色存储在 userRole 中
     console.log(userRole);
 
-    // 如果目标路由需要认证
-    if (to.meta.requiresAuth) {
-        if (!isAuthenticated) {
-            // 如果用户没有认证，跳转到首页或登录页面
-            next('/home');  // 这里你可以设置为 `/login` 页面
-        } else {
-            // 认证通过，继续跳转
-            next();
-        }
-    } else {
-        // 如果目标路由不需要认证，直接跳转
-        next();
+    // 如果目标路径在 routes 中且不需要认证，直接放行
+    const routePaths = routes.map(route => route.path);
+    if (routePaths.includes(to.path) && !to.meta.requiresAuth) {
+        return next();  // 直接放行
+    }
+    // 如果目标路径在 routes 中且需要认证，用户认证后跳转
+    if (routePaths.includes(to.path) && to.meta.requiresAuth && isAuthenticated) {
+        return next();  // 直接放行
+    }
+
+    // 如果目标路由需要认证且用户未认证，跳转到首页
+    if (to.meta.requiresAuth && !isAuthenticated) {
+        return next('/home');
+    }
+
+    // 如果用户未认证且当前路径不是 home，跳转到首页
+    if (!isAuthenticated && to.path !== '/home') {
+        return next('/home');
     }
 });
 

@@ -43,13 +43,13 @@ export const downloadProfile = (uid) => {
 
 // 获取账号状态的接口
 export const getStatus = (uid) => {
-    const form = {"uid": uid};
-    return request.post("account/getStatus", form);
+    // const form = {"uid": uid};
+    return request.post("account/getStatus", uid);
 }
 
 // 设置账号状态的接口
 export const setStatus = (uid, status) => {
-    const form = {"uid": uid, "status": status};
+    const form = {"uid": uid.uid, "status": status};
     return request.post("account/setStatus", form);
 }
 
@@ -68,4 +68,10 @@ export const resetPassword = (uid, defaultPwd) => {
 export const deleteAccount = (uid) => {
     const form = {"uid": uid};
     return request.post("account/deleteAccount", form);
+}
+
+// 根据账户名查询账户ID的接口
+export const findUidByUsername = (username) => {
+    const form = {"username": username};
+    return request.post("account/findUidByUsername", form);
 }
