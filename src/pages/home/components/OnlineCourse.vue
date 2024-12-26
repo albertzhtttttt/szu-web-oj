@@ -31,42 +31,58 @@ const courses = ref([
   {
     image: 'src/assets/rec6.png',
     name: '英语畅谈中国',
-    teacher: '湖北大学 / 王志茹'
+    teacher: '湖北大学 / 王志茹',
+    status: '开课中',
+    info:'这是课程简介',
   },
   {
     image: 'src/assets/rec7.png',
     name: '现代科技与人类未来',
-    teacher: '大连大学 / 刘金涛'
+    teacher: '大连大学 / 刘金涛',
+    status: '开课中',
+    info:'这是课程简介',
   },
   {
     image: 'src/assets/rec8.png',
     name: '宇宙探索与发现',
-    teacher: '大连大学 / 刘金涛'
+    teacher: '大连大学 / 刘金涛',
+    status: '开课中',
+    info:'这是课程简介',
   },
   {
     image: 'src/assets/rec9.png',
     name: '女生穿搭技巧',
-    teacher: '南昌大学 / 吴小吟'
+    teacher: '南昌大学 / 吴小吟',
+    status: '开课中',
+    info:'这是课程简介',
   },
   {
     image: 'src/assets/rec10.png',
     name: '大学生职业生涯',
-    teacher: '昆明理工大学 / 洪云'
+    teacher: '昆明理工大学 / 洪云',
+    status: '开课中',
+    info:'这是课程简介',
   },
   {
     image: 'src/assets/rec11.png',
     name: '无处不在-传染病',
-    teacher: '南昌大学 / 孙水林'
+    teacher: '南昌大学 / 孙水林',
+    status: '开课中',
+    info:'这是课程简介',
   },
   {
     image: 'src/assets/rec12.png',
     name: '中国近现代史纲要',
-    teacher: '广州大学 / 张雪娇'
+    teacher: '广州大学 / 张雪娇',
+    status: '开课中',
+    info:'这是课程简介',
   },
   {
     image: 'src/assets/rec13.png',
     name: '生死学',
-    teacher: '广州大学 / 胡宣安'
+    teacher: '广州大学 / 胡宣安',
+    status: '开课中',
+    info:'这是课程简介',
   }
 ])
 const goToCourseDetail = (course) => {

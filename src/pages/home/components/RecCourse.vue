@@ -39,27 +39,37 @@ const courses = ref([
   {
     image: 'src/assets/rec1.png',
     name: '软件工程',
-    teacher: '深圳大学 / 杜文峰'
+    teacher: '深圳大学 / 杜文峰',
+    status: '开课中',
+    info:'这是课程简介',
   },
   {
     image: 'src/assets/rec2.png',
     name: '云计算基础及应用',
-    teacher: '深圳大学 / 明仲'
+    teacher: '深圳大学 / 明仲',
+    status: '开课中',
+    info:'这是课程简介',
   },
   {
     image: 'src/assets/rec3.jpg',
     name: '舞蹈与健康',
-    teacher: '武汉科技大学 / 袁芳'
+    teacher: '武汉科技大学 / 袁芳',
+    status: '开课中',
+    info:'这是课程简介',
   },
   {
     image: 'src/assets/rec4.png',
     name: '药物的奥秘',
-    teacher: '三峡大学 / 罗华军'
+    teacher: '三峡大学 / 罗华军',
+    status: '开课中',
+    info:'这是课程简介',
   },
   {
     image: 'src/assets/rec5.png',
     name: '词曲小说中的人生大爱',
-    teacher: '湖北大学 / 薛海'
+    teacher: '湖北大学 / 薛海',
+    status: '开课中',
+    info:'这是课程简介',
   }
 ])
 const goToCourseDetail = (course) => {

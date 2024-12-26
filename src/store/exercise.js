@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { toRaw } from 'vue';
 import {useUserStore} from '/src/store/user.js'
+import {getUserInfo} from "@/pages/user/utils/api.js";
 
 const userStore = useUserStore();
 
@@ -40,11 +41,11 @@ function saveToDb(storeName, data) {
         return new Promise((resolve, reject) => {
             const transaction = db.transaction(storeName, 'readwrite');
             const store = transaction.objectStore(storeName);
-            console.log(data);
+            // console.log(data);
 
             // 将 Proxy 转换为原始对象
             data = toRaw(data);  // 将 Vue 响应式对象转换为普通对象
-            console.log(data);
+            // console.log(data);
 
             // 如果是 userQuestionSets，确保数据格式正确
             if (storeName === 'userQuestionSets') {
@@ -72,7 +73,7 @@ function saveToDb(storeName, data) {
                 data = data.map(item => ({
                     ...item
                 }));
-                console.log(data);
+                // console.log(data);
                 data.forEach((item) => {
                     store.put(item); // 插入或更新数据
                 });
@@ -169,53 +170,58 @@ export const useExerciseStore = defineStore('exercise', {
         userQuestionSets: [],
     }),
     actions: {
-
+        async initQuestionBank(){
+            // 如果没有数据，使用默认数据，并将默认数据存入indexDB
+            this.questionBank = [
+                // 定义一个题库，所有的题目类型都在这里面
+                { "id": 1, "type": "single", "question": "地球是太阳系的第几颗行星？", "options": ["第一", "第二", "第三"], "answer": "第三", "userAnswer": null },
+                { "id": 2, "type": "multi", "question": "以下哪些是联合国安全理事会常任理事国？", "options": ["中国", "法国", "德国", "俄罗斯", "美国"], "answer": ["中国", "法国", "俄罗斯", "美国"], "userAnswer": [] },
+                { "id": 3, "type": "trueFalse", "question": "水的化学式是H2O。", "options": ["正确", "错误"], "answer": "正确", "userAnswer": null },
+                { "id": 4, "type": "shortAnswer", "question": "请解释牛顿第三定律。", "answer": "作用力和反作用力大小相等，方向相反。", "userAnswer": null },
+                { "id": 5, "type": "single", "question": "世界上最高的山峰是什么？", "options": ["珠穆朗玛峰", "乞力马扎罗山", "麦金利山"], "answer": "珠穆朗玛峰", "userAnswer": null },
+                { "id": 6, "type": "multi", "question": "以下哪些是哺乳动物？", "options": ["海豚", "鲨鱼", "蝙蝠", "鳄鱼"], "answer": ["海豚", "蝙蝠"], "userAnswer": [] },
+                { "id": 7, "type": "trueFalse", "question": "光年是时间单位。", "options": ["正确", "错误"], "answer": "错误", "userAnswer": null },
+                { "id": 8, "type": "shortAnswer", "question": "描述一下什么是温室效应。", "answer": "温室效应是指地球大气层中的温室气体对太阳辐射的吸收和反射作用，导致地球表面温度升高的现象。", "userAnswer": null },
+                { "id": 9, "type": "single", "question": "人类的DNA由多少对染色体组成？", "options": ["22", "23", "24"], "answer": "23", "userAnswer": null },
+                { "id": 10, "type": "multi", "question": "以下哪些是人体必需的微量元素？", "options": ["铁", "钙", "锌", "钠"], "answer": ["铁", "锌"], "userAnswer": [] },
+                { "id": 11, "type": "trueFalse", "question": "维生素C是人体必需的维生素之一。", "options": ["正确", "错误"], "answer": "正确", "userAnswer": null },
+                { "id": 12, "type": "shortAnswer", "question": "请解释什么是光合作用。", "answer": "光合作用是植物、藻类和某些细菌利用光能将二氧化碳和水转化为有机物和氧气的过程。", "userAnswer": null },
+                { "id": 13, "type": "single", "question": "世界上最大的海洋是什么？", "options": ["太平洋", "大西洋", "印度洋", "北冰洋"], "answer": "太平洋", "userAnswer": null },
+                { "id": 14, "type": "multi", "question": "以下哪些是计算机编程语言？", "options": ["Java", "C++", "Python", "SQL"], "answer": ["Java", "C++", "Python"], "userAnswer": [] },
+                { "id": 15, "type": "trueFalse", "question": "二进制数1011等于十进制数11。", "options": ["正确", "错误"], "answer": "正确", "userAnswer": null },
+                { "id": 16, "type": "shortAnswer", "question": "描述一下什么是相对论。", "answer": "相对论是爱因斯坦提出的描述物体高速运动和强引力场中物理现象的理论，包括狭义相对论和广义相对论。", "userAnswer": null },
+                { "id": 17, "type": "single", "question": "人体最大的器官是什么？", "options": ["心脏", "肝脏", "皮肤", "肺"], "answer": "皮肤", "userAnswer": null },
+                { "id": 18, "type": "multi", "question": "以下哪些是太阳系的行星？", "options": ["水星", "火星", "地球", "冥王星"], "answer": ["水星", "火星", "地球"], "userAnswer": [] },
+                { "id": 19, "type": "trueFalse", "question": "DNA和RNA都是核酸。", "options": ["正确", "错误"], "answer": "正确", "userAnswer": null },
+                { "id": 20, "type": "shortAnswer", "question": "请解释什么是生态系统。", "answer": "生态系统是由生物群落和其生存环境相互作用形成的一个统一整体。", "userAnswer": null },
+                { "id": 21, "type": "single", "question": "世界上最长的河流是什么？", "options": ["尼罗河", "亚马逊河", "长江", "密西西比河"], "answer": "尼罗河", "userAnswer": null },
+                { "id": 22, "type": "multi", "question": "以下哪些是哺乳动物的特征？", "options": ["哺乳", "卵生", "有毛发", "冷血"], "answer": ["哺乳", "有毛发"], "userAnswer": [] },
+                { "id": 23, "type": "trueFalse", "question": "所有鸟类都能飞行。", "options": ["正确", "错误"], "answer": "错误", "userAnswer": null },
+                { "id": 24, "type": "shortAnswer", "question": "描述一下什么是遗传学。", "answer": "遗传学是研究生物体遗传和变异规律的科学。", "userAnswer": null },
+                { "id": 25, "type": "single", "question": "光速在真空中的速度是多少？", "options": ["299,792,458米/秒", "3.0 x 10^8米/秒", "7.9 x 10^6米/秒"], "answer": "299,792,458米/秒", "userAnswer": null },
+                { "id": 26, "type": "multi", "question": "以下哪些是计算机硬件的组成部分？", "options": ["CPU", "GPU", "内存", "硬盘"], "answer": ["CPU", "GPU", "内存", "硬盘"], "userAnswer": [] },
+                { "id": 27, "type": "trueFalse", "question": "人类的血液是红色的因为含有铁。", "options": ["正确", "错误"], "answer": "正确", "userAnswer": null },
+                { "id": 28, "type": "shortAnswer", "question": "描述一下什么是细胞分裂。", "answer": "细胞分裂是细胞生命周期中的一个重要过程，通过这个过程，一个细胞分裂成两个或多个细胞。", "userAnswer": null },
+                { "id": 29, "type": "single", "question": "人体最大的淋巴器官是什么？", "options": ["扁桃体", "脾脏", "胸腺", "阑尾"], "answer": "脾脏", "userAnswer": null }
+            ];
+            await saveToDb('questionBank', this.questionBank);
+            console.log("default question bank saved to IndexDB")
+        },
         // 初始化时加载数据, 获取用户的所有题目集
         async loadData() {
             try {
-                const userName =  userStore.currentUser.username;
+                // const userName =  userStore.currentUser.username;
+                // 因为user.js更改，需要从服务器获取用户数据，而不是直接从本地获取，需要加上await，否则第一次登录会不显示，需要刷新才显示题目
+                const userName = (await getUserInfo()).account.username;
                 // 从 IndexedDB 获取数据
                 const questionBank = await getFromDb('questionBank', 'all');
                 const userQuestionSets = await getFromDb('userQuestionSets', userName);
 
                 if (questionBank) {
                     this.questionBank = questionBank;
+                    console.log("bank exits");
                 } else {
-                    // 如果没有数据，使用默认数据，并将默认数据存入indexDB
-                    this.questionBank = [
-                        // 定义一个题库，所有的题目类型都在这里面
-                        { "id": 1, "type": "single", "question": "地球是太阳系的第几颗行星？", "options": ["第一", "第二", "第三"], "answer": "第三", "userAnswer": null },
-                        { "id": 2, "type": "multi", "question": "以下哪些是联合国安全理事会常任理事国？", "options": ["中国", "法国", "德国", "俄罗斯", "美国"], "answer": ["中国", "法国", "俄罗斯", "美国"], "userAnswer": [] },
-                        { "id": 3, "type": "trueFalse", "question": "水的化学式是H2O。", "options": ["正确", "错误"], "answer": "正确", "userAnswer": null },
-                        { "id": 4, "type": "shortAnswer", "question": "请解释牛顿第三定律。", "answer": "作用力和反作用力大小相等，方向相反。", "userAnswer": null },
-                        { "id": 5, "type": "single", "question": "世界上最高的山峰是什么？", "options": ["珠穆朗玛峰", "乞力马扎罗山", "麦金利山"], "answer": "珠穆朗玛峰", "userAnswer": null },
-                        { "id": 6, "type": "multi", "question": "以下哪些是哺乳动物？", "options": ["海豚", "鲨鱼", "蝙蝠", "鳄鱼"], "answer": ["海豚", "蝙蝠"], "userAnswer": [] },
-                        { "id": 7, "type": "trueFalse", "question": "光年是时间单位。", "options": ["正确", "错误"], "answer": "错误", "userAnswer": null },
-                        { "id": 8, "type": "shortAnswer", "question": "描述一下什么是温室效应。", "answer": "温室效应是指地球大气层中的温室气体对太阳辐射的吸收和反射作用，导致地球表面温度升高的现象。", "userAnswer": null },
-                        { "id": 9, "type": "single", "question": "人类的DNA由多少对染色体组成？", "options": ["22", "23", "24"], "answer": "23", "userAnswer": null },
-                        { "id": 10, "type": "multi", "question": "以下哪些是人体必需的微量元素？", "options": ["铁", "钙", "锌", "钠"], "answer": ["铁", "锌"], "userAnswer": [] },
-                        { "id": 11, "type": "trueFalse", "question": "维生素C是人体必需的维生素之一。", "options": ["正确", "错误"], "answer": "正确", "userAnswer": null },
-                        { "id": 12, "type": "shortAnswer", "question": "请解释什么是光合作用。", "answer": "光合作用是植物、藻类和某些细菌利用光能将二氧化碳和水转化为有机物和氧气的过程。", "userAnswer": null },
-                        { "id": 13, "type": "single", "question": "世界上最大的海洋是什么？", "options": ["太平洋", "大西洋", "印度洋", "北冰洋"], "answer": "太平洋", "userAnswer": null },
-                        { "id": 14, "type": "multi", "question": "以下哪些是计算机编程语言？", "options": ["Java", "C++", "Python", "SQL"], "answer": ["Java", "C++", "Python"], "userAnswer": [] },
-                        { "id": 15, "type": "trueFalse", "question": "二进制数1011等于十进制数11。", "options": ["正确", "错误"], "answer": "正确", "userAnswer": null },
-                        { "id": 16, "type": "shortAnswer", "question": "描述一下什么是相对论。", "answer": "相对论是爱因斯坦提出的描述物体高速运动和强引力场中物理现象的理论，包括狭义相对论和广义相对论。", "userAnswer": null },
-                        { "id": 17, "type": "single", "question": "人体最大的器官是什么？", "options": ["心脏", "肝脏", "皮肤", "肺"], "answer": "皮肤", "userAnswer": null },
-                        { "id": 18, "type": "multi", "question": "以下哪些是太阳系的行星？", "options": ["水星", "火星", "地球", "冥王星"], "answer": ["水星", "火星", "地球"], "userAnswer": [] },
-                        { "id": 19, "type": "trueFalse", "question": "DNA和RNA都是核酸。", "options": ["正确", "错误"], "answer": "正确", "userAnswer": null },
-                        { "id": 20, "type": "shortAnswer", "question": "请解释什么是生态系统。", "answer": "生态系统是由生物群落和其生存环境相互作用形成的一个统一整体。", "userAnswer": null },
-                        { "id": 21, "type": "single", "question": "世界上最长的河流是什么？", "options": ["尼罗河", "亚马逊河", "长江", "密西西比河"], "answer": "尼罗河", "userAnswer": null },
-                        { "id": 22, "type": "multi", "question": "以下哪些是哺乳动物的特征？", "options": ["哺乳", "卵生", "有毛发", "冷血"], "answer": ["哺乳", "有毛发"], "userAnswer": [] },
-                        { "id": 23, "type": "trueFalse", "question": "所有鸟类都能飞行。", "options": ["正确", "错误"], "answer": "错误", "userAnswer": null },
-                        { "id": 24, "type": "shortAnswer", "question": "描述一下什么是遗传学。", "answer": "遗传学是研究生物体遗传和变异规律的科学。", "userAnswer": null },
-                        { "id": 25, "type": "single", "question": "光速在真空中的速度是多少？", "options": ["299,792,458米/秒", "3.0 x 10^8米/秒", "7.9 x 10^6米/秒"], "answer": "299,792,458米/秒", "userAnswer": null },
-                        { "id": 26, "type": "multi", "question": "以下哪些是计算机硬件的组成部分？", "options": ["CPU", "GPU", "内存", "硬盘"], "answer": ["CPU", "GPU", "内存", "硬盘"], "userAnswer": [] },
-                        { "id": 27, "type": "trueFalse", "question": "人类的血液是红色的因为含有铁。", "options": ["正确", "错误"], "answer": "正确", "userAnswer": null },
-                        { "id": 28, "type": "shortAnswer", "question": "描述一下什么是细胞分裂。", "answer": "细胞分裂是细胞生命周期中的一个重要过程，通过这个过程，一个细胞分裂成两个或多个细胞。", "userAnswer": null },
-                        { "id": 29, "type": "single", "question": "人体最大的淋巴器官是什么？", "options": ["扁桃体", "脾脏", "胸腺", "阑尾"], "answer": "脾脏", "userAnswer": null }
-                    ];
-                    await saveToDb('questionBank', this.questionBank);
-                    console.log("default question bank saved to IndexDB")
+                    await this.initQuestionBank();
                 }
 
                 if (userQuestionSets) {
