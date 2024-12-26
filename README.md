@@ -48,7 +48,7 @@
 │          index.vue    //用户模块的页面
 │
 ├─router
-│      index.js    //路由配置文件
+│      pinia.js    //路由配置文件
 │
 └─store
         user.js    //pinia仓库内容
