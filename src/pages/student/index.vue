@@ -11,8 +11,8 @@
     <!-- Tab 导航 -->
     <el-tabs v-model="activeTab" type="card" class="tabs">
       <el-tab-pane label="我的课程" name="courses"></el-tab-pane>
-      <el-tab-pane label="待办事项" name="todos"></el-tab-pane>
-      <el-tab-pane label="我的讨论" name="discussions"></el-tab-pane>
+      <el-tab-pane label="我的作业" name="todos"></el-tab-pane>
+      <el-tab-pane label="我的考试" name="tests"></el-tab-pane> 
     </el-tabs>
 
     <!-- 主内容区域 -->
@@ -20,6 +20,7 @@
       <MyCourses v-show="activeTab === 'courses'" />
       <MyTodos v-show="activeTab === 'todos'" />
       <MyDiscussions v-show="activeTab === 'discussions'" />
+      <MyTests v-show="activeTab === 'tests'" /> 
     </div>
   </div>
 </template>
@@ -27,13 +28,13 @@
 <script>
 import MyCourses from "./components/MyCourses.vue";
 import MyTodos from "./components/MyTodos.vue";
-import MyDiscussions from "./components/MyDiscussions.vue";
+import MyTests from "./components/MyTests.vue"; 
 
 export default {
   components: {
     MyCourses,
     MyTodos,
-    MyDiscussions,
+    MyTests,
   },
   data() {
     return {
