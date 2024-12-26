@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { toRaw } from 'vue';
 import {useUserStore} from '/src/store/user.js'
+import {getUserInfo} from "@/pages/user/utils/api.js";
 
 const userStore = useUserStore();
 
@@ -209,7 +210,9 @@ export const useExerciseStore = defineStore('exercise', {
         // 初始化时加载数据, 获取用户的所有题目集
         async loadData() {
             try {
-                const userName =  userStore.currentUser.username;
+                // const userName =  userStore.currentUser.username;
+                // 因为user.js更改，需要从服务器获取用户数据，而不是直接从本地获取，需要加上await，否则第一次登录会不显示，需要刷新才显示题目
+                const userName = (await getUserInfo()).account.username;
                 // 从 IndexedDB 获取数据
                 const questionBank = await getFromDb('questionBank', 'all');
                 const userQuestionSets = await getFromDb('userQuestionSets', userName);

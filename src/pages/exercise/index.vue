@@ -197,7 +197,7 @@ export default {
         // //这样写得到一个promise，长度非0，但实际长度为0导致progressbar报错
         // this.questionSets = this.exerciseStore.loadData();
         // console.log("get questionset from db",this.questionSets);
-        this.loadQuestionBank();
+        this.loadQuestionBank();  // 将题库初始化抽取出来，每次用户登录重新加载题库，防止在新机器上indexDB无法初始化
         this.loadQuestionSets();
       }
       else {
@@ -214,7 +214,8 @@ export default {
       ElMessage.error('登录后才能使用题库，请先登录！');  // 如果未认证，弹出错误提示
     }
     else{
-      this.loadQuestionBank();
+      this.loadQuestionBank();  // 将题库初始化抽取出来，每次刷新页面重新加载题库，防止在新机器上indexDB无法初始化
+      this.loadQuestionSets();
     }
   },
 }
