@@ -1,8 +1,9 @@
 <template>
-   <div class="common-layout">
+  <div class="common-layout">
     <nav v-if="isTeacher" class="teacher-menu">
       <button @click="goToAddCourse">添加课程</button>
       <button @click="goToCheckGrades">查看成绩</button>
+      <button @click="goToCourseManagement">课程管理</button> <!-- 新增课程管理按钮 -->
     </nav>
     <Header />
     <div>
@@ -11,15 +12,18 @@
     <Footer />
   </div>
 </template>
+
 <script setup>
 import Header from "@/components/Header.vue"
 import Footer from "@/components/Footer.vue"
 import { computed } from "vue";
 import { useUserStore } from "@/store/user"; // 确保路径正确
 import { useRouter } from "vue-router"; // 引入 vue-router
+
 const userStore = useUserStore();
 const router = useRouter();
 const isTeacher = computed(() => userStore.isTeacher);
+
 // 跳转到添加课程页面
 const goToAddCourse = () => {
   router.push("/add-course"); // 使用 vue-router 跳转
@@ -29,7 +33,13 @@ const goToAddCourse = () => {
 const goToCheckGrades = () => {
   router.push("/check-grades");
 };
+
+// 跳转到课程管理页面
+const goToCourseManagement = () => {
+  router.push("/course-management"); // 跳转到课程管理页面
+};
 </script>
+
 <style scoped>
 .common-layout {
   display: flex;
@@ -39,6 +49,7 @@ const goToCheckGrades = () => {
   background-color: #f1f5fa;
   overflow-y: auto;
 }
+
 .teacher-menu {
   display: flex;
   gap: 10px;
