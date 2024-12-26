@@ -57,6 +57,21 @@ const routes = [
         component: () => import('../pages/exercise/index.vue'),
         meta: {requiresAuth: true},  // 不需要认证的路由
     },
+    {
+        path: "/add-course",
+        name: "AddCourse",
+        component: () => import("../pages/teacher/AddCourse.vue"),
+      },
+      {
+        path: "/check-grades",
+        name: "CheckGrades",
+        component: () => import("../pages/teacher/CheckGrades.vue"),
+      },
+      {
+        path: '/course-management',
+        name: 'CourseManagement',
+        component: () => import("../pages/teacher/CourseManagement.vue"),
+      }
 ];
 
 const router = createRouter({
