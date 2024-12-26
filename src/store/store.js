@@ -4,12 +4,16 @@ import { defineStore } from 'pinia'
 export const useCourseStore = defineStore('course', {
     state: () => ({
         selectedCourse: null,  // 当前选择的课程
-        courses: []           // 课程列表
+        courses: [],        // 课程列表
+        searchInfo: ''        // 搜索关键字
     }),
     actions: {
         // 设置选中的课程
         setCourse(course) {
             this.selectedCourse = course
+        },
+        setInfo(info) {
+            this.searchInfo = info
         },
 
         // 加载课程列表，如果本地存储中没有数据则使用默认数据

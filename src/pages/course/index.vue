@@ -114,6 +114,11 @@ const sortedCourses = computed(() => {
     coursesCopy = coursesCopy.filter(course => course.teacher.includes(currentCollege.value))
   }
 
+  //搜索
+  if (courseStore.searchInfo !== '') {
+    coursesCopy = coursesCopy.filter(course => course.teacher.includes(courseStore.searchInfo) || course.name.includes(courseStore.searchInfo))
+  }
+
   // 根据当前排序条件处理
   if (activeName.value === 'asc') {
     return coursesCopy.sort((a, b) => a.name.localeCompare(b.name))
